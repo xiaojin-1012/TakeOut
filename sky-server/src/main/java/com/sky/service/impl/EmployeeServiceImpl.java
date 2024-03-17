@@ -135,7 +135,6 @@ employee.setPassword("*****");
      * @return
      */
     public void update(EmployeeDTO employeeDTO) {
-
         Employee employee = new Employee();
         //将employeeDTO属性传到employee上
         BeanUtils.copyProperties(employeeDTO,employee);
