@@ -12,9 +12,13 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.digester.RuleSet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 菜品管理
@@ -27,6 +31,8 @@ public class DishController {
 
     @Autowired
     private DishService dishService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 新增菜品
@@ -37,6 +43,8 @@ public class DishController {
     public Result save(@RequestBody DishDTO dishDTO) {
         log.info("新增菜品，{}", dishDTO);
         dishService.saveWithFlavor(dishDTO);
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
         return Result.success();
     }
 
@@ -66,6 +74,8 @@ public class DishController {
     public Result delete(@RequestParam List<Long> ids) {
         log.info("菜品批量删除：{}", ids);
         dishService.deleteBatch(ids);
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
         return Result.success();
     }
 
@@ -81,6 +91,7 @@ public class DishController {
         DishVO dishVO = dishService.getByIdwithFlavor(id);
         return Result.success(dishVO);
     }
+
     /**
      * 修改菜品信息
      *
@@ -89,33 +100,40 @@ public class DishController {
      */
     @PutMapping
     @ApiOperation("修改菜品信息")
-    public Result update(@RequestBody DishDTO dishDTO){
-        log.info("修改菜品，{}",dishDTO);
+    public Result update(@RequestBody DishDTO dishDTO) {
+        log.info("修改菜品，{}", dishDTO);
         dishService.updatewithDlavor(dishDTO);
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
         return Result.success();
     }
+
     /**
      * 菜品起售停售
      *
      * @param status
      * @return
      */
-   @PostMapping("/status/{status}")
-   @ApiOperation("菜品停售起售")
-    public  Result startorStop(@PathVariable Integer status, Long id){
-        log.info("启用禁用菜品：{},{}",status,id);
-        dishService.satrtorStop(status,id);
+    @PostMapping("/status/{status}")
+    @ApiOperation("菜品停售起售")
+    public Result startorStop(@PathVariable Integer status, Long id) {
+        log.info("启用禁用菜品：{},{}", status, id);
+        dishService.satrtorStop(status, id);
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
         return Result.success();
     }
+
     /**
      * 根据分类id查询菜品
+     *
      * @param categoryId
      * @return
      */
     @GetMapping("/list")
     @ApiOperation("根据分类id查询菜品")
-    public Result<List<Dish>> list(Long categoryId){
-        List<Dish> list =dishService.list(categoryId);
+    public Result<List<Dish>> list(Long categoryId) {
+        List<Dish> list = dishService.list(categoryId);
         return Result.success(list);
     }
 }
