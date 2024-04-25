@@ -24,4 +24,6 @@ public interface UserMapper {
      */
 @AutoFill(value = OperationType.INSERT)
     void insert(User user);
+    @Select("select * from sky_take_out.user where id = #{id}")
+    User getById(Long userId);
 }
