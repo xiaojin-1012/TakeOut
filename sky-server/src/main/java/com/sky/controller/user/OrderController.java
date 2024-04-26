@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+
     /**
      * 用户下单
      *
@@ -32,7 +33,7 @@ public class OrderController {
      */
     @PostMapping("/submit")
     @ApiOperation("用户下单")
-    public Result<OrderSubmitVO> submit(@RequestBody OrdersSubmitDTO ordersSubmitDTO){
+    public Result<OrderSubmitVO> submit(@RequestBody OrdersSubmitDTO ordersSubmitDTO) {
         log.info("用户下单：{}", ordersSubmitDTO);
         OrderSubmitVO orderSubmitVO = orderService.submitOrder(ordersSubmitDTO);
         return Result.success(orderSubmitVO);
@@ -67,6 +68,7 @@ public class OrderController {
         PageResult pageResult = orderService.pageQuery4User(page, pageSize, status);
         return Result.success(pageResult);
     }
+
     /**
      * 查询订单详情
      *
@@ -79,6 +81,7 @@ public class OrderController {
         OrderVO orderVO = orderService.details(id);
         return Result.success(orderVO);
     }
+
     /**
      * 用户取消订单
      *
@@ -90,6 +93,7 @@ public class OrderController {
         orderService.userCancelById(id);
         return Result.success();
     }
+
     /**
      * 再来一单
      *
@@ -100,6 +104,18 @@ public class OrderController {
     @ApiOperation("再来一单")
     public Result repetition(@PathVariable Long id) {
         orderService.repetition(id);
+        return Result.success();
+    }
+
+    /**
+     * 客户催单
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/reminder/{id}")
+    public Result reminder(@PathVariable("id") Long id) {
+        orderService.reminder(id);
         return Result.success();
     }
 }

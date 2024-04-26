@@ -131,16 +131,16 @@ public class AdminOrderServiceImpl implements AdminOrderService {
         }
 
         //支付状态
-        Integer payStatus = ordersDB.getPayStatus();
-        if (payStatus == Orders.PAID) {
-            //用户已支付，需要退款
-            String refund = weChatPayUtil.refund(
-                    ordersDB.getNumber(),
-                    ordersDB.getNumber(),
-                    new BigDecimal(0.01),
-                    new BigDecimal(0.01));
-            log.info("申请退款：{}", refund);
-        }
+//        Integer payStatus = ordersDB.getPayStatus();
+//        if (payStatus == Orders.PAID) {
+//            //用户已支付，需要退款
+//            String refund = weChatPayUtil.refund(
+//                    ordersDB.getNumber(),
+//                    ordersDB.getNumber(),
+//                    new BigDecimal(0.01),
+//                    new BigDecimal(0.01));
+//            log.info("申请退款：{}", refund);
+//        }
         // 拒单需要退款，根据订单id更新订单状态、拒单原因、取消时间
         Orders orders = new Orders();
         orders.setId(ordersDB.getId());
