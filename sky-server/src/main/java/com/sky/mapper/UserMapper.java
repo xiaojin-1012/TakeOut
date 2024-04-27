@@ -6,6 +6,8 @@ import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Map;
+
 @Mapper
 public interface UserMapper {
     /**
@@ -14,16 +16,25 @@ public interface UserMapper {
      * @param openid
      * @return
      */
-@Select("select * from sky_take_out.user where openid=#{openid}")
+    @Select("select * from sky_take_out.user where openid=#{openid}")
     User getByOpenId(String openid);
+
     /**
      * 添加用户
      *
      * @param user
      * @return
      */
-@AutoFill(value = OperationType.INSERT)
+    @AutoFill(value = OperationType.INSERT)
     void insert(User user);
+
     @Select("select * from sky_take_out.user where id = #{id}")
     User getById(Long userId);
+
+    /**
+     * 根据动态条件统计用户数量
+     *
+     * @return
+     */
+    Integer countByMap(Map map);
 }
