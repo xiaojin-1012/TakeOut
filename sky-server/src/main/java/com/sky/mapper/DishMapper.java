@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface DishMapper {
@@ -39,19 +40,22 @@ public interface DishMapper {
      * @return
      */
     Page<DishVO> pageQuery(DishPageQueryDTO dishPageQueryDTO);
-/*
-根据主键id查菜品
- */
+
+    /*
+    根据主键id查菜品
+     */
     @Select("select * from sky_take_out.dish where id=#{id}")
     Dish getById(Long id);
+
     /**
      * 根据主键id删除菜品数据
      *
      * @param
      * @return
      */
-@Delete("delete from sky_take_out.dish where id=#{id}")
+    @Delete("delete from sky_take_out.dish where id=#{id}")
     void deleteById(Long id);
+
     /**
      * 修改菜品信息
      *
@@ -64,15 +68,26 @@ public interface DishMapper {
 
     /**
      * 根据分类id动态查询菜品
+     *
      * @param dish
      * @return
      */
     List<Dish> list(Dish dish);
+
     /**
      * 根据套餐id查询菜品
+     *
      * @param setmealId
      * @return
      */
     @Select("select * from sky_take_out.setmeal_dish where setmeal_id=#{setmealId}")
     List<Dish> getByStmealId(Long setmealId);
+
+    /**
+     * 根据条件统计菜品数量
+     *
+     * @param map
+     * @return
+     */
+    Integer countByMap(Map map);
 }

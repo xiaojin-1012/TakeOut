@@ -179,6 +179,5 @@ public class ReportServiceImpl implements ReportService {
         salesTop10ReportVO.setNameList(StringUtils.join(nameList, ","));
         return salesTop10ReportVO;
     }
-
 }
 
