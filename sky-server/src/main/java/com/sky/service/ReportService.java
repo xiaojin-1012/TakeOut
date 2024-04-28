@@ -5,11 +5,13 @@ import com.sky.vo.SalesTop10ReportVO;
 import com.sky.vo.TurnoverReportVO;
 import com.sky.vo.UserReportVO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 
 public interface ReportService {
     /**
-     *统计指定时间区间的营业额
+     * 统计指定时间区间的营业额
+     *
      * @return
      */
     TurnoverReportVO getTurnoverStatistics(LocalDate begin, LocalDate end);
@@ -20,16 +22,25 @@ public interface ReportService {
      * @return
      */
     UserReportVO getUserStatistics(LocalDate begin, LocalDate end);
+
     /**
      * 统计指定时间区间的订单数据
      *
      * @return
      */
     OrderReportVO getOrderStatistics(LocalDate begin, LocalDate end);
+
     /**
      * 统计指定时间区间的销量排名前10
      *
      * @return
      */
     SalesTop10ReportVO getSalesTop10(LocalDate begin, LocalDate end);
+
+    /**
+     * 导出运营数据报表
+     *
+     * @return
+     */
+    void exportBusinessData(HttpServletResponse response);
 }
