@@ -9,7 +9,7 @@ sky:
   alioss:
     endpoint: oss-cn-beijing.aliyuncs.com
     accessKeyId: LTAI5tFNaPMPYuRWyP6D6nH8
-    accessKeySecret: 2yUVmdScfgMyHvDGdClO6xEQJ3rcVI
+    accessKeySecret:
     bucketName: sky-waimai23
   Redis:
     host: localhost
@@ -22,7 +22,7 @@ sky:
     mchid: 1561414331
     mchSerialNo: 4B3B3DC35414AD50B1B755BAF8DE9CC7CF407606
 #    privateKeyFilePath: D:\pay\apiclient_key.pem
-    apiV3Key: CZBK51236435wxpay435434323FFDuv3
+    apiV3Key:
 #    weChatPayCertFilePath: D:\pay\wechatpay_166D96F876F45C7D07CE98952A96EC980368ACFC.pem
     notifyUrl: https://767968b6.r1.vip.cpolar.cn/notify/paySuccess
     refundNotifyUrl: https://58869fb.r2.cpolar.top/notify/refundSuccess
